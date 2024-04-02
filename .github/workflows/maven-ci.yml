@@ -54,12 +54,6 @@ jobs:
   # Uploads dependency graph to GitHub to receive Dependabot alerts 
   update_dependence_graph:
 
-    - name: Restore cached build
-      uses: actions/cache@v3
-      with:
-        key: cached-build-${{github.sha}}
-        path: .
-
     needs: [maven_test]  # Enforces that maven_test runs first
 
     runs-on: ubuntu-latest
@@ -68,6 +62,12 @@ jobs:
       contents: write
 
     steps:
+
+    - name: Restore cached build
+      uses: actions/cache@v3
+      with:
+        key: cached-build-${{github.sha}}
+        path: .
 
     # https://github.com/marketplace/actions/maven-dependency-tree-dependency-submission
     - name: Update dependency graph
